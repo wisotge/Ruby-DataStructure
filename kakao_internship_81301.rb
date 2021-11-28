@@ -5,25 +5,8 @@ STR_TO_NUM_DICTIONARY = { "zero": "0", "one": "1", "two": "2", "three": "3",
                           "eight": "8", "nine": "9" }
 
 def solution(str)
-  answer, temp_str = "", ""
-
-  parsed_str = []
-  str.split("").map{|char| parsed_str << char}
-
-  parsed_str.each do |char|
-    if STR_TO_NUM_DICTIONARY.has_value?(char)
-      answer += char      
-    else 
-      temp_str += char
-      
-      if STR_TO_NUM_DICTIONARY.has_key?(temp_str.to_sym)
-        answer += STR_TO_NUM_DICTIONARY[temp_str.to_sym]
-        temp_str = ""
-      end
-    end 
-  end
-
-  return answer.to_s
+  STR_TO_NUM_DICTIONARY.map{|k, v| str.gsub!(k.to_s, v)}
+  return str.to_i
 end
 
 solution(STR)
