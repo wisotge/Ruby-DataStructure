@@ -1,3 +1,4 @@
+puts "값을 입력하여 주세요..."
 input = []
 
 while value = gets 
@@ -6,7 +7,8 @@ end
 
 def solution input
 	result = parse_input(input)
-	do_programming(result[:lamp_array], result[:p_array])
+	lamp_array = do_programming(result[:lamp_array], result[:p_array])
+	print_answer(lamp_array)
 end
 
 def parse_input input
@@ -33,7 +35,32 @@ def parse_input input
 end
 
 def do_programming lamp_array, p_array
-# do programming
+	p_array.each do |p_info|
+		direction = p_info[0].eql?("0") ? "row" : "column"
+		target_i = p_info[1].to_i
+		
+		if direction.eql?("row")
+			lamp_array[target_i - 1].each_with_index do |lamp, i|
+				lamp_array[target_i - 1][i] = (lamp == "0") ? "1" : "0"
+			end
+		elsif direction.eql?("column") 
+			lamp_array.each do |lamp|
+				lamp[target_i - 1] = (lamp[target_i - 1] == "0") ? "1" : "0"
+			end 
+		end 
+	end
+	
+	return lamp_array
 end 
+
+def print_answer lamp_array
+	result_msg = ""
+	lamp_array.each do |lamp|
+		lamp.map{|v| result_msg += "#{v} "}
+		result_msg += "\n"
+	end
+	
+	print result_msg
+end
 
 solution(input)
